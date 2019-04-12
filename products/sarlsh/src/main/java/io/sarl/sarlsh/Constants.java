@@ -19,35 +19,36 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
-
-/** Provider of the module for the SARL configuration.
+/** Constants for sarlsh.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public final class Constants {
 
-	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
+	/** Return code when failure.
+	 */
+	public static final int ERROR_CODE = 255;
+
+	/** Default prompt.
+	 */
+	public static final String PROMPT = "sarl> "; //$NON-NLS-1$
+
+	/** Default name of the sarlsh program.
+	 */
+	public static final String PROGRAM_NAME = "sarlsh"; //$NON-NLS-1$
+
+	/** Index of the first variable that will contain the results of the interpreted expressions.
+	 */
+	public static final int FIRST_INTERPRETED_VALUE_INDEX = 1;
+
+	private Constants() {
+		//
 	}
-
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
 
 }

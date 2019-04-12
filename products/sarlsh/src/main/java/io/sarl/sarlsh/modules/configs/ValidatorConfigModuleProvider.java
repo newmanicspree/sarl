@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.configs;
 
 import com.google.inject.Module;
 import io.bootique.BQModule;

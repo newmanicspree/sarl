@@ -19,35 +19,19 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.lang.interpreter;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
+import org.eclipse.xtext.xbase.interpreter.impl.XbaseInterpreter;
 
-/** Provider of the module for the SARL configuration.
+
+/** The interpreter from SARL to the target language.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
-
-	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
-	}
-
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
-
+public class SarlInterpreter extends XbaseInterpreter {
+	//
 }

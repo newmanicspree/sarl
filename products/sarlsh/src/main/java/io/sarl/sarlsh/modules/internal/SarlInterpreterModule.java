@@ -19,35 +19,42 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.internal;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
+import com.google.inject.AbstractModule;
+import com.google.inject.Injector;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
-/** Provider of the module for the SARL configuration.
+import io.sarl.lang.interpreter.SarlInterpreter;
+
+/** Module for creating the SARL interpreter with the configuration provided by bootique modules.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public class SarlInterpreterModule extends AbstractModule {
 
 	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
+	protected void configure() {
+		//
 	}
 
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
+	/** Replies the SARL interpreter.
+	 *
+	 * @param injector the current injector.
+	 * @return the SARL batch compiler
+	 */
+	@SuppressWarnings({"static-method", "checkstyle:npathcomplexity"})
+	@Provides
+	@Singleton
+	public SarlInterpreter provideSarlInterpreter(Injector injector) {
+		final SarlInterpreter interpreter = new SarlInterpreter();
+		injector.injectMembers(interpreter);
+		return interpreter;
+	}
 
 }

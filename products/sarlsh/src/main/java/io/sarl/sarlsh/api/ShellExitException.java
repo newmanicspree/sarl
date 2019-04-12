@@ -19,35 +19,40 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.api;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
+import org.eclipse.xtext.xbase.lib.Pure;
 
-/** Provider of the module for the SARL configuration.
+/**
+ * Exception that is thrown when a shell exit is invoked.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public final class ShellExitException extends RuntimeException {
 
-	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
+	private static final long serialVersionUID = -2937447989979887096L;
+
+	private final int returnCode;
+
+	/** Constructor.
+	 *
+	 * @param returnCode the code to provide to the caller of the interpreter.
+	 */
+	public ShellExitException(int returnCode) {
+		this.returnCode = returnCode;
 	}
 
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
+	/** Replies the code to provide to the caller of the interpreter.
+	 *
+	 * @return the code.
+	 */
+	@Pure
+	public int getReturnCode() {
+		return this.returnCode;
+	}
 
 }

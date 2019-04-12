@@ -19,13 +19,15 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.internal;
 
 import com.google.inject.Module;
 import io.bootique.BQModule;
 import io.bootique.BQModuleProvider;
 
-/** Provider of the module for the SARL configuration.
+import io.sarl.lang.SARLRuntimeModule;
+
+/** Provider of the module for the SARL compiler runtime.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
@@ -33,11 +35,11 @@ import io.bootique.BQModuleProvider;
  * @mavenartifactid $ArtifactId$
  * @since 0.8
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public class SARLRuntimeModuleProvider implements BQModuleProvider {
 
 	@Override
 	public Module module() {
-		return new ValidatorConfigModule();
+		return new SARLRuntimeModule();
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class ValidatorConfigModuleProvider implements BQModuleProvider {
                 .overrides(overrides())
                 .providerName(name())
                 .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
+                .description(Messages.SarlRuntimeModuleProvider_0);
     }
 
 }

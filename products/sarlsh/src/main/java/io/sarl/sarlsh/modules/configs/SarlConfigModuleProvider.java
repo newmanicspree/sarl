@@ -19,25 +19,36 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.configs;
+
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.Map;
 
 import com.google.inject.Module;
 import io.bootique.BQModule;
 import io.bootique.BQModuleProvider;
 
-/** Provider of the module for the SARL configuration.
+import io.sarl.sarlsh.configs.SarlConfig;
+
+/** Provider of the module for the sarlsh configuration.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public class SarlConfigModuleProvider implements BQModuleProvider {
 
 	@Override
 	public Module module() {
-		return new ValidatorConfigModule();
+		return new SarlConfigModule();
+	}
+
+	@Override
+	public Map<String, Type> configs() {
+		return Collections.singletonMap(SarlConfig.PREFIX, SarlConfig.class);
 	}
 
 	@Override
@@ -47,7 +58,7 @@ public class ValidatorConfigModuleProvider implements BQModuleProvider {
                 .overrides(overrides())
                 .providerName(name())
                 .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
+                .description(Messages.SarlConfigModuleProvider_0);
     }
 
 }

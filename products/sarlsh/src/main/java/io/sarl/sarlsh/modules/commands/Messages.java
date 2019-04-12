@@ -19,35 +19,30 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.commands;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
+import org.eclipse.osgi.util.NLS;
 
-/** Provider of the module for the SARL configuration.
+/** Messages for the SARL batch compiler.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @ExcludeFromApidoc
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
-
-	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
+@SuppressWarnings("all")
+public class Messages extends NLS {
+	private static final String BUNDLE_NAME = Messages.class.getPackage().getName() + ".messages"; //$NON-NLS-1$
+	public static String SarlshDefaultCommandModuleProvider_0;
+	public static String ShellCommandModuleProvider_0;
+	public static String VersionCommandModuleProvider_0;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
-
+	private Messages() {
+	}
 }

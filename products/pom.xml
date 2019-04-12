@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>sarlc</module>
+		<module>sarlsh</module>
 	</modules>
 
 	<profiles>

@@ -19,35 +19,42 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.commands;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
+import static io.bootique.BQCoreModule.extend;
 
-/** Provider of the module for the SARL configuration.
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import io.bootique.log.BootLogger;
+
+import io.sarl.sarlsh.commands.VersionCommand;
+
+/** Module for the command for printing out the sarlc version.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public class VersionCommandModule extends AbstractModule {
 
 	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
+	protected void configure() {
+		extend(binder()).addCommand(VersionCommand.class);
 	}
 
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
+	/** Provide the command for displaying the sarlc version.
+	 *
+	 * @param bootLogger the logger.
+	 * @return the command.
+	 */
+	@SuppressWarnings("static-method")
+	@Provides
+	@Singleton
+	public VersionCommand provideSarlcVersionCommand(BootLogger bootLogger) {
+		return new VersionCommand(bootLogger);
+	}
 
 }

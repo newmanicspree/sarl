@@ -1,0 +1,8 @@
+io.sarl.sarlsh.modules.internal.SARLRuntimeModuleProvider
+io.sarl.sarlsh.modules.internal.SarlCliModuleProvider
+io.sarl.sarlsh.modules.internal.SarlInterpreterModuleProvider
+io.sarl.sarlsh.modules.configs.SarlConfigModuleProvider
+io.sarl.sarlsh.modules.configs.ValidatorConfigModuleProvider
+io.sarl.sarlsh.modules.commands.VersionCommandModuleProvider
+io.sarl.sarlsh.modules.commands.ShellCommandModuleProvider
+io.sarl.sarlsh.modules.commands.SarlshDefaultCommandModuleProvider

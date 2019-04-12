@@ -19,35 +19,27 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.commands;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
-import io.bootique.BQModuleProvider;
+import static io.bootique.BQCoreModule.extend;
 
-/** Provider of the module for the SARL configuration.
+import com.google.inject.AbstractModule;
+
+import io.sarl.sarlsh.commands.ShellCommand;
+
+/** Module for configuring the sarlsh default command.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public class SarlshDefaultCommandModule extends AbstractModule {
 
 	@Override
-	public Module module() {
-		return new ValidatorConfigModule();
+	protected void configure() {
+		extend(binder()).setDefaultCommand(ShellCommand.class);
 	}
-
-	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
-    }
 
 }

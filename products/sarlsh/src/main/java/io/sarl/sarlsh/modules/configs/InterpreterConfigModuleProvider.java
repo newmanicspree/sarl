@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-package io.sarl.lang.sarlc.modules.configs;
+package io.sarl.sarlsh.modules.configs;
 
 import com.google.inject.Module;
 import io.bootique.BQModule;
@@ -33,11 +33,11 @@ import io.bootique.BQModuleProvider;
  * @mavenartifactid $ArtifactId$
  * @since 0.8
  */
-public class ValidatorConfigModuleProvider implements BQModuleProvider {
+public class InterpreterConfigModuleProvider implements BQModuleProvider {
 
 	@Override
 	public Module module() {
-		return new ValidatorConfigModule();
+		return new InterpreterConfigModule();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ValidatorConfigModuleProvider implements BQModuleProvider {
                 .overrides(overrides())
                 .providerName(name())
                 .configs(configs())
-                .description(Messages.ValidatorConfigModuleProvider_0);
+                .description(Messages.InterpreterConfigModuleProvider_0);
     }
 
 }
