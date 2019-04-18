@@ -1046,8 +1046,8 @@ public final class Utils {
 	 */
 	public static boolean isCompatibleSARLLibraryOnClasspath(TypeReferences typeReferences, Notifier context) {
 		final OutParameter<String> version = new OutParameter<>();
-		final SarlLibraryErrorCode code = getSARLLibraryVersionOnClasspath(typeReferences, context, version);
-		if (code == SarlLibraryErrorCode.SARL_FOUND) {
+		final LibraryErrorCode code = getSARLLibraryVersionOnClasspath(typeReferences, context, version);
+		if (code == LibraryErrorCode.LIBRARY_FOUND) {
 			return isCompatibleSARLLibraryVersion(version.get());
 		}
 		return false;
@@ -1115,7 +1115,9 @@ public final class Utils {
 	 *
 	 * @return <code>true</code> if this version is for a compatible Xtext.
 	 *     Otherwise <code>false</code>.
+	 * @deprecated since 10.0, no replacement.
 	 */
+	@Deprecated
 	public static boolean isCompatibleXtextVersion() {
 		final XtextVersion xtextVersion = XtextVersion.getCurrent();
 		if (xtextVersion != null && !Strings.isNullOrEmpty(xtextVersion.getVersion())) {
@@ -1135,8 +1137,8 @@ public final class Utils {
 	@Deprecated
 	public static String getSARLLibraryVersionOnClasspath(TypeReferences typeReferences, Notifier context) {
 		final OutParameter<String> version = new OutParameter<>();
-		final SarlLibraryErrorCode code = getSARLLibraryVersionOnClasspath(typeReferences, context, version);
-		if (code == SarlLibraryErrorCode.SARL_FOUND) {
+		final LibraryErrorCode code = getSARLLibraryVersionOnClasspath(typeReferences, context, version);
+		if (code == LibraryErrorCode.LIBRARY_FOUND) {
 			return version.get();
 		}
 		return null;
@@ -1151,30 +1153,30 @@ public final class Utils {
 	 *     is too old.
 	 */
 	@SuppressWarnings("checkstyle:npathcomplexity")
-	public static SarlLibraryErrorCode getSARLLibraryVersionOnClasspath(TypeReferences typeReferences, Notifier context,
+	public static LibraryErrorCode getSARLLibraryVersionOnClasspath(TypeReferences typeReferences, Notifier context,
 			OutParameter<String> version) {
 		if (checkSarlVersionClass) {
 			checkSarlVersionClass = false;
 			try {
 				final Object v = SARLVersion.class.getDeclaredField(SARL_VERSION_FIELD_NAME_STR);
 				if (v == null) {
-					return SarlLibraryErrorCode.INVALID_SARL_VERSION_BYTECODE;
+					return LibraryErrorCode.INVALID_VERSION_BYTECODE;
 				}
 			} catch (Throwable e) {
-				return SarlLibraryErrorCode.INVALID_SARL_VERSION_BYTECODE;
+				return LibraryErrorCode.INVALID_VERSION_BYTECODE;
 			}
 		}
 		final JvmType type;
 		try {
 			type = typeReferences.findDeclaredType(SARLVersion.class, context);
 		} catch (Throwable exception) {
-			return SarlLibraryErrorCode.NO_SARL_VERSION_CLASS;
+			return LibraryErrorCode.NO_LIBRARY_VERSION_CLASS;
 		}
 		if (type == null) {
-			return SarlLibraryErrorCode.NO_SARL_VERSION_CLASS;
+			return LibraryErrorCode.NO_LIBRARY_VERSION_CLASS;
 		}
 		if (!(type instanceof JvmDeclaredType)) {
-			return SarlLibraryErrorCode.NO_SARL_VERSION_DECLARED_TYPE;
+			return LibraryErrorCode.NO_LIBRARY_VERSION_DECLARED_TYPE;
 		}
 		final JvmDeclaredType sarlVersionType = (JvmDeclaredType) type;
 		JvmField versionField = null;
@@ -1186,16 +1188,16 @@ public final class Utils {
 			}
 		}
 		if (versionField == null) {
-			return SarlLibraryErrorCode.NO_SARL_VERSION_FIELD;
+			return LibraryErrorCode.NO_VERSION_FIELD;
 		}
 		final String value = versionField.getConstantValueAsString();
 		if (Strings.isNullOrEmpty(value)) {
-			return SarlLibraryErrorCode.NO_SARL_VERSION_VALUE;
+			return LibraryErrorCode.NO_VERSION_VALUE;
 		}
 		if (version != null) {
 			version.set(value);
 		}
-		return SarlLibraryErrorCode.SARL_FOUND;
+		return LibraryErrorCode.LIBRARY_FOUND;
 	}
 
 	/** Replies if the given annotation is an annotation from the SARL core library.
@@ -1335,8 +1337,7 @@ public final class Utils {
 	}
 
 	/** Error code for the
-	 * {@link Utils#getSARLLibraryVersionOnClasspath(TypeReferences, Notifier, OutParameter)}
-	 * function.
+	 * {@link Utils#getSARLLibraryVersionOnClasspath(TypeReferences, Notifier, OutParameter)} function.
 	 *
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
@@ -1344,25 +1345,25 @@ public final class Utils {
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
 	 */
-	public enum SarlLibraryErrorCode {
-		/** SARL Library was found.
+	public enum LibraryErrorCode {
+		/** SARL/Xtext Library was found.
 		 */
-		SARL_FOUND,
-		/** SARL version class not found.
+		LIBRARY_FOUND,
+		/** SARL/Xtext version class not found.
 		 */
-		NO_SARL_VERSION_CLASS,
-		/** SARL version class is not a Xtext declared type.
+		NO_LIBRARY_VERSION_CLASS,
+		/** SARL/Xtext version class is not a Xtext declared type.
 		 */
-		NO_SARL_VERSION_DECLARED_TYPE,
-		/** SARL version field not found.
+		NO_LIBRARY_VERSION_DECLARED_TYPE,
+		/** SARL/Xtext version field not found.
 		 */
-		NO_SARL_VERSION_FIELD,
-		/** SARL version value not found.
+		NO_VERSION_FIELD,
+		/** SARL/Xtext version value not found.
 		 */
-		NO_SARL_VERSION_VALUE,
+		NO_VERSION_VALUE,
 		/** The byte code (the class) of {@link SARLVersion} does not contains the expected field.
 		 */
-		INVALID_SARL_VERSION_BYTECODE,
+		INVALID_VERSION_BYTECODE,
 	}
 
 	/** Dump the object.

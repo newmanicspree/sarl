@@ -47,7 +47,7 @@ import io.sarl.lang.annotation.PrivateAPI;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.util.OutParameter;
 import io.sarl.lang.util.Utils;
-import io.sarl.lang.util.Utils.SarlLibraryErrorCode;
+import io.sarl.lang.util.Utils.LibraryErrorCode;
 import io.sarl.tests.api.AbstractSarlTest;
 
 /** This class tests the {@link Utils} for SARL.
@@ -167,8 +167,8 @@ public class UtilsTest extends AbstractSarlTest {
 		final Notifier context = mock(Notifier.class);
 		final OutParameter<String> version = new OutParameter<>();
 		
-		SarlLibraryErrorCode code = Utils.getSARLLibraryVersionOnClasspath(references, context, version);
-		assertEquals(SarlLibraryErrorCode.NO_SARL_VERSION_DECLARED_TYPE, code);
+		LibraryErrorCode code = Utils.getSARLLibraryVersionOnClasspath(references, context, version);
+		assertEquals(LibraryErrorCode.NO_LIBRARY_VERSION_DECLARED_TYPE, code);
 
 		JvmDeclaredType dtype = mock(JvmDeclaredType.class);
 		when(references.findDeclaredType(any(Class.class), any(Notifier.class))).thenReturn(dtype);
@@ -176,16 +176,16 @@ public class UtilsTest extends AbstractSarlTest {
 		when(field.getSimpleName()).thenReturn("X");
 		when(dtype.getDeclaredFields()).thenReturn(Arrays.asList(field));
 		code = Utils.getSARLLibraryVersionOnClasspath(references, context, version);
-		assertEquals(SarlLibraryErrorCode.NO_SARL_VERSION_FIELD, code);
+		assertEquals(LibraryErrorCode.NO_VERSION_FIELD, code);
 
 		when(field.getSimpleName()).thenReturn("SPECIFICATION_RELEASE_VERSION_STRING");
 		when(field.getConstantValueAsString()).thenReturn("");
 		code = Utils.getSARLLibraryVersionOnClasspath(references, context, version);
-		assertEquals(SarlLibraryErrorCode.NO_SARL_VERSION_VALUE, code);
+		assertEquals(LibraryErrorCode.NO_VERSION_VALUE, code);
 
 		when(field.getConstantValueAsString()).thenReturn("2.3.4");
 		code = Utils.getSARLLibraryVersionOnClasspath(references, context, version);
-		assertEquals(SarlLibraryErrorCode.SARL_FOUND, code);
+		assertEquals(LibraryErrorCode.LIBRARY_FOUND, code);
 		assertEquals("2.3.4", version.get());
 	}
 

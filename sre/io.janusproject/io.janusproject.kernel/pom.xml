@@ -136,8 +136,9 @@
 							</classPath>
 							<jre>
 								<minVersion>${compiler.level}.0</minVersion>
+								<maxVersion>${compiler.level.max.after}.0</maxVersion>
 								<jdkPreference>preferJre</jdkPreference>
-								<runtimeBits>64/32</runtimeBits>
+								<runtimeBits>64</runtimeBits>
 							</jre>
 							<versionInfo>
 								<fileVersion>${janus.release_version}</fileVersion>

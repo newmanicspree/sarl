@@ -25,6 +25,9 @@ import java.util.List;
 
 import io.bootique.help.HelpOption;
 
+import io.sarl.maven.bootiqueapp.BootiqueMain;
+import io.sarl.sarldoc.modules.internal.SarldocApplicationModuleProvider;
+
 /** Main entry point for the SARL API documentation generator.
  *
  * @author $Author: sgalland$
@@ -44,7 +47,7 @@ public final class Main {
 	 * @param args the command line arguments.
 	 */
 	public static void main(String[] args) {
-		final int retCode = createMainObject().runGenerator(args);
+		final int retCode = createMainObject().runCommand(args);
 		System.exit(retCode);
 	}
 
@@ -60,8 +63,8 @@ public final class Main {
 	 *
 	 * @return the main launcher.
 	 */
-	protected static BootiqueSarldocMain createMainObject() {
-		return new BootiqueSarldocMain();
+	protected static BootiqueMain createMainObject() {
+		return new BootiqueMain(new SarldocApplicationModuleProvider());
 	}
 
 	/** Replies the options of the program.
